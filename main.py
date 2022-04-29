@@ -116,6 +116,62 @@ def multiply(q, m):
     return res
 
 
+def divide(q, m):
+    # check if v is zero
+    if m == "0" * 16:
+        if q == "0" * 16:
+            print("q and m are zero, result is indeterminate (trivial)")
+
+            return "Indeterminate"
+        else:
+            print("m is zero, can't divide")
+
+            return "Undefined"
+
+    a = "0" * 16
+
+    print("\n---Initial values---")
+    print(f"a: {a}")
+    print(f"q: {q}")
+    print(f"m: {m}")
+
+    for i in range(16):
+        print(f"\n---Cycle {i + 1}---")
+
+        print("Left-shifting a,q")
+        a = a[1:] + q[0]
+        q = q[1:] + "0"
+
+        print(f"a: {a}")
+        print(f"q: {q}")
+        print(f"m: {m}")
+
+        print("\na = a - m")
+        a = subtract(a, m)
+
+        print(f"a: {a}")
+        print(f"q: {q}")
+        print(f"m: {m}")
+
+        if a[0] == "1":
+            print("\na < 0? Yes, q0 = 0 and a = a + m")
+
+            q = q[:-1] + "0"
+            a = add(a, m)
+        else:
+            print("\na < 0? No, q0 = 1")
+
+            q = q[:-1] + "1"
+
+        print(f"a: {a}")
+        print(f"q: {q}")
+        print(f"m: {m}")
+
+    print(f"\nRemainder: {a}")
+
+    return q
+
+
 a, b, op = read_input()
 
 a = to_binary(a)
@@ -126,5 +182,7 @@ print("")
 
 if op == "*":
     res = multiply(a, b)
+if op == "/":
+    res = divide(a, b)
 
 print(f"\nResult: {res}")
