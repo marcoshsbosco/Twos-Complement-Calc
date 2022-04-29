@@ -182,8 +182,13 @@ def divide(q, m):
 
 a, b, op = read_input()
 
-a = to_binary(a)
-b = to_binary(b)
+try:
+    a = to_binary(a)
+    b = to_binary(b)
+except ArithmeticError:
+    print("Please use numbers between -32768 and 32767 (inclusive)\n")
+
+    raise
 
 print(f"a: {a}")
 print(f"b: {b}")
