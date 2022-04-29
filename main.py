@@ -67,6 +67,55 @@ def subtract(a, b):
     return add(a, b)
 
 
+def multiply(q, m):
+    a = "0" * 16
+    qm1 = "0"
+
+    print("\n---Initial values---")
+    print(f"a: {a}")
+    print(f"q: {q}")
+    print(f"q-1: {qm1}")
+    print(f"m: {m}")
+
+    for i in range(16):
+        print(f"\n---Cycle {i + 1}---")
+
+        q0qm1 = q[len(q) - 1] + qm1
+
+        if q0qm1 == "10":
+            print(f"a = a - m")
+
+            a = subtract(a, m)
+
+            print(f"a: {a}")
+            print(f"q: {q}")
+            print(f"q-1: {qm1}")
+            print(f"m: {m}\n")
+        elif q0qm1 == "01":
+            print(f"a = a + m")
+
+            a = add(a, m)
+
+            print(f"a: {a}")
+            print(f"q: {q}")
+            print(f"q-1: {qm1}")
+            print(f"m: {m}\n")
+
+        print("Right-shifting a,q,q-1")
+        qm1 = q[len(q) - 1]
+        q = a[len(a) - 1] + q[:-1]
+        a = a[0] + a[:-1]
+
+        print(f"a: {a}")
+        print(f"q: {q}")
+        print(f"q-1: {qm1}")
+        print(f"m: {m}")
+
+    res = a + q
+
+    return res
+
+
 a, b, op = read_input()
 
 a = to_binary(a)
@@ -75,4 +124,7 @@ print(f"a: {a}")
 print(f"b: {b}")
 print("")
 
-#print(f"\nResult: {res}")
+if op == "*":
+    res = multiply(a, b)
+
+print(f"\nResult: {res}")
