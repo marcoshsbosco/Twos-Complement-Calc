@@ -52,18 +52,18 @@ def add(a, b):
             res += "0" if tmp == 2 else "1"  # tmp is either 2 or 3 (10 or 11), so store 2nd bit
             carry = 1
         else:
-            res += str(tmp)
+            res += str(tmp)  # tmp is either 0 or 1
             carry = 0
 
     res = res[::-1]
 
-    if a[0] == b[0] and res[0] != a[0]:
+    if a[0] == b[0] and res[0] != a[0]:  # overflow rule
         raise ArithmeticError("OverflowError")
 
     return res
 
 
-def subtract(a, b):
+def subtract(a, b):  # subtraction rule
     # make b negative (a - b = a + (-b))
     complement = ""
 
@@ -109,7 +109,7 @@ def multiply(q, m):
             print(f"q-1: {qm1}")
             print(f"m: {m}\n")
 
-        print("Right-shifting a,q,q-1")
+        print("Arithmetic right-shifting a,q,q-1")
         qm1 = q[len(q) - 1]
         q = a[len(a) - 1] + q[:-1]
         a = a[0] + a[:-1]
@@ -125,7 +125,7 @@ def multiply(q, m):
 
 
 def divide(q, m):
-    # check if v is zero
+    # check if m is zero
     if m == "0" * 16:
         if q == "0" * 16:
             print("q and m are zero, result is indeterminate (trivial)")
@@ -161,12 +161,12 @@ def divide(q, m):
         print(f"q: {q}")
         print(f"m: {m}")
 
-        if a[0] == "1":
+        if a[0] == "1":  # a is negative
             print("\na < 0? Yes, q0 = 0 and a = a + m")
 
             q = q[:-1] + "0"
             a = add(a, m)
-        else:
+        else:  # a >= 0
             print("\na < 0? No, q0 = 1")
 
             q = q[:-1] + "1"
