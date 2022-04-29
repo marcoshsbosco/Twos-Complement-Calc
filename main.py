@@ -9,6 +9,11 @@ def read_input():
 
 
 def to_binary(n):
+    if n > 32767:
+        raise ArithmeticError('OverflowError')
+    elif n < -32768:
+        raise ArithmeticError('UnderflowError')
+
     negative = True if n < 0 else False
     binary = ""
 
@@ -51,6 +56,9 @@ def add(a, b):
             carry = 0
 
     res = res[::-1]
+
+    if a[0] == b[0] and res[0] != a[0]:
+        raise ArithmeticError("OverflowError")
 
     return res
 
@@ -176,6 +184,7 @@ a, b, op = read_input()
 
 a = to_binary(a)
 b = to_binary(b)
+
 print(f"a: {a}")
 print(f"b: {b}")
 print("")
